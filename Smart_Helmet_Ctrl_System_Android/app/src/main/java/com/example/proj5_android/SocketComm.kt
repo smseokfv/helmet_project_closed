@@ -20,7 +20,6 @@ class SocketComm {
     private var userId: String = ""
     private var userPassword: String = ""
 
-
     private fun loadValue() {
         objValBackup = MainActivity.getInstance().getSharedPreferences("InputValueBackup", Activity.MODE_PRIVATE)
         ipAddress = objValBackup.getString("IPAddr", "").toString()
