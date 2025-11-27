@@ -21,6 +21,7 @@ public class LoginDialog extends JDialog implements ActionListener {
     // 1. 컴포넌트 및 상태 변수
     // ---------------------------------------------
     private final MainWindow mainWindow;
+    private final String helmetId;
     private final JTextField idField;
     private final JPasswordField passwordField;
     private final JButton loginButton;
@@ -30,10 +31,11 @@ public class LoginDialog extends JDialog implements ActionListener {
      * LoginDialog를 생성합니다.
      * @param parent 부모 JFrame (MainWindow)
      */
-    public LoginDialog(MainWindow parent) {
+    public LoginDialog(MainWindow parent, String helmetId) {
         // 부모 창이 닫히기 전까지는 이 창에만 상호작용 가능하도록 모달(true)로 설정
         super(parent, "로그인", true);
         this.mainWindow = parent; 
+        this.helmetId = helmetId;
         
         // 닫기 버튼 클릭 시 바로 닫히도록 설정
         setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
@@ -74,20 +76,34 @@ public class LoginDialog extends JDialog implements ActionListener {
         gbc.insets = new Insets(8, 8, 8, 8); // 간격 설정
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
+        int row = 0;
+
+        // 헬멧 ID 표시
+        gbc.gridx = 0; gbc.gridy = row;
+        getContentPane().add(new JLabel("헬멧 ID:"), gbc);
+        gbc.gridx = 1;
+        getContentPane().add(new JLabel(helmetId), gbc);
+
+        row++;
+
         // 아이디 레이블 및 필드
-        gbc.gridx = 0; gbc.gridy = 0;
+        gbc.gridx = 0; gbc.gridy = row;
         getContentPane().add(new JLabel("아이디:"), gbc);
-        gbc.gridx = 1; gbc.gridy = 0;
+        gbc.gridx = 1; gbc.gridy = row;
         getContentPane().add(idField, gbc);
 
+        row++;
+
         // 비밀번호 레이블 및 필드
-        gbc.gridx = 0; gbc.gridy = 1;
+        gbc.gridx = 0; gbc.gridy = row;
         getContentPane().add(new JLabel("비밀번호:"), gbc);
-        gbc.gridx = 1; gbc.gridy = 1;
+        gbc.gridx = 1; gbc.gridy = row;
         getContentPane().add(passwordField, gbc);
 
+        row++;
+
         // 로그인 버튼
-        gbc.gridx = 1; gbc.gridy = 2;
+        gbc.gridx = 1; gbc.gridy = row;
         gbc.anchor = GridBagConstraints.EAST; 
         getContentPane().add(loginButton, gbc);
     }
@@ -102,10 +118,10 @@ public class LoginDialog extends JDialog implements ActionListener {
             // JPasswordField에서 비밀번호를 가져올 때는 보안상의 이유로 char[] 배열을 String으로 변환해야 함
             String inputPassword = new String(passwordField.getPassword()); 
 
-            System.out.println("[LoginDialog] 로그인 시도 - 입력한 아이디: \"" + inputId + "\", 비밀번호: \"" + inputPassword + "\"");
+            System.out.println("[LoginDialog] 로그인 시도 - 헬멧 ID: \"" + helmetId + "\", 아이디: \"" + inputId + "\", 비밀번호: \"" + inputPassword + "\"");
             
             // MainWindow의 userLoginList에서 확인
-            boolean result = mainWindow.checkUserLogin(inputId, inputPassword);
+            boolean result = mainWindow.checkUserLogin(helmetId, inputId, inputPassword);
             System.out.println("[LoginDialog] 인증 결과: " + result);
             
             if (result) {

@@ -79,7 +79,7 @@ public class Pnl3Cell_UD extends JPanel {
 							&& strStatus_conn.equals("Y")) {
 
 						// 로그인 창 표시
-						LoginDialog dialog = new LoginDialog(main);
+						LoginDialog dialog = new LoginDialog(main, strUD_ID);
 						dialog.setVisible(true);
 						
 						// 로그인 성공 시에만 스트리밍 시작

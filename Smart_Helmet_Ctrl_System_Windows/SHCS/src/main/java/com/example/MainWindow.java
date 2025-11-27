@@ -199,43 +199,76 @@ public class MainWindow extends JFrame {
 		return mapAP_SSID;
 	}
 
-	// 사용자 인증 정보 저장 (USER_ID -> USER_PASSWORD)
-	private Map<String, String> userLoginList = new HashMap<>();
+	// 사용자 인증 정보 저장 (USER_ID -> 로그인 정보)
+	private static class UserLoginInfo {
+		private final String helmetId;
+		private final String password;
 
-	public Map<String, String> getUserLoginList() {
+		private UserLoginInfo(String helmetId, String password) {
+			this.helmetId = helmetId;
+			this.password = password;
+		}
+
+		public String getHelmetId() {
+			return helmetId;
+		}
+
+		public String getPassword() {
+			return password;
+		}
+	}
+
+	private Map<String, UserLoginInfo> userLoginList = new HashMap<>();
+
+	public Map<String, UserLoginInfo> getUserLoginList() {
 		return userLoginList;
 	}
 
 	// 사용자 인증 정보 추가 (userId 중복 체크)
-	public void addUserLogin(String userId, String userPassword) {
-		System.out.println("[addUserLogin 호출] userId: \"" + userId + "\", userPassword: \"" + userPassword + "\"");
-		
-		if (userId != null && !userId.isEmpty() && userPassword != null && !userPassword.isEmpty()) {
+	public void addUserLogin(String helmetId, String userId, String userPassword) {
+		System.out.println("[addUserLogin 호출] helmetId: \"" + helmetId + "\", userId: \"" + userId + "\", userPassword: \"" + userPassword + "\"");
+
+		boolean hasHelmetId = helmetId != null && !helmetId.isEmpty();
+		boolean hasUserId = userId != null && !userId.isEmpty();
+		boolean hasPassword = userPassword != null && !userPassword.isEmpty();
+
+		if (hasHelmetId && hasUserId && hasPassword) {
 			// userId가 이미 리스트에 있으면 추가하지 않음
 			if (!userLoginList.containsKey(userId)) {
-				userLoginList.put(userId, userPassword);
-				System.out.println("[사용자 인증 정보 추가] USER_ID: " + userId + ", 저장되는 값: \"" + userId + ":" + userPassword + "\"");
+				userLoginList.put(userId, new UserLoginInfo(helmetId, userPassword));
+				System.out.println("[사용자 인증 정보 추가] USER_ID: " + userId + ", 저장되는 값: \"" + userId + ":" + helmetId + ":" + userPassword + "\"");
 			} else {
-				System.out.println("[사용자 인증 정보] 이미 존재함 - USER_ID: " + userId);
+				UserLoginInfo existing = userLoginList.get(userId);
+				System.out.println("[사용자 인증 정보] 이미 존재함 - USER_ID: " + userId + ", 기존 헬멧 ID: " + existing.getHelmetId());
 			}
-			
+
 			// 리스트 전체를 한 줄로 출력
 			StringBuilder listStr = new StringBuilder();
-			for (Map.Entry<String, String> entry : userLoginList.entrySet()) {
+			for (Map.Entry<String, UserLoginInfo> entry : userLoginList.entrySet()) {
 				if (listStr.length() > 0) {
 					listStr.append(", ");
 				}
-				listStr.append(entry.getKey()).append(":").append(entry.getValue());
+				UserLoginInfo info = entry.getValue();
+				listStr.append(info.getHelmetId())
+				       .append(":")
+				       .append(entry.getKey())
+				       .append(":")
+				       .append(info.getPassword());
 			}
 			System.out.println("[리스트 전체] (" + userLoginList.size() + "개): " + listStr.toString());
 		} else {
-			System.out.println("[addUserLogin] 조건 실패 - userId: " + userId + ", userPassword: " + userPassword);
+			System.out.println("[addUserLogin] 조건 실패 - helmetId: " + helmetId + ", userId: " + userId + ", userPassword: " + userPassword);
 		}
 	}
 
-	// 사용자 인증 확인 (입력한 아이디와 비밀번호가 리스트에 있는지 확인)
-	public boolean checkUserLogin(String userId, String userPassword) {
-		System.out.println("[checkUserLogin 호출] userId: \"" + userId + "\", userPassword: \"" + userPassword + "\"");
+	// 사용자 인증 확인 (입력한 헬멧 아이디, 사용자 아이디, 비밀번호가 모두 일치하는지 확인)
+	public boolean checkUserLogin(String helmetId, String userId, String userPassword) {
+		System.out.println("[checkUserLogin 호출] helmetId: \"" + helmetId + "\", userId: \"" + userId + "\", userPassword: \"" + userPassword + "\"");
+		
+		if (helmetId == null || helmetId.isEmpty()) {
+			System.out.println("[checkUserLogin] helmetId가 null이거나 비어있음");
+			return false;
+		}
 		
 		if (userId == null || userId.isEmpty()) {
 			System.out.println("[checkUserLogin] userId가 null이거나 비어있음");
@@ -247,18 +280,28 @@ public class MainWindow extends JFrame {
 			return false;
 		}
 		
-		// 아이디와 비밀번호 모두 확인
-		String storedPassword = userLoginList.get(userId);
-		boolean isValid = storedPassword != null && storedPassword.equals(userPassword);
-		System.out.println("[checkUserLogin] 아이디 존재 여부: " + (storedPassword != null) + ", 비밀번호 일치 여부: " + isValid);
+		UserLoginInfo storedInfo = userLoginList.get(userId);
+		boolean idMatches = storedInfo != null && helmetId.equals(storedInfo.getHelmetId());
+		boolean passwordMatches = storedInfo != null && storedInfo.getPassword().equals(userPassword);
+		boolean isValid = idMatches && passwordMatches;
+		
+		System.out.println("[checkUserLogin] 아이디 존재 여부: " + (storedInfo != null)
+				+ ", 헬멧 ID 일치 여부: " + idMatches
+				+ ", 비밀번호 일치 여부: " + passwordMatches
+				+ ", 저장된 헬멧 ID: " + (storedInfo != null ? storedInfo.getHelmetId() : "없음"));
 		
 		// 현재 리스트 전체 출력
 		StringBuilder listStr = new StringBuilder();
-		for (Map.Entry<String, String> entry : userLoginList.entrySet()) {
+		for (Map.Entry<String, UserLoginInfo> entry : userLoginList.entrySet()) {
 			if (listStr.length() > 0) {
 				listStr.append(", ");
 			}
-			listStr.append(entry.getKey()).append(":").append(entry.getValue());
+			UserLoginInfo info = entry.getValue();
+			listStr.append(entry.getKey())
+			       .append(":")
+			       .append(info.getHelmetId())
+			       .append(":")
+			       .append(info.getPassword());
 		}
 		System.out.println("[checkUserLogin] 현재 리스트 (" + userLoginList.size() + "개): " + listStr.toString());
 		

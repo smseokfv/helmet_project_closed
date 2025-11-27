@@ -33,3 +33,5 @@ Smart_Helmet_Ctrl_System_Windows/
 .metadata/
 bin/
 target/
+log/
+index/

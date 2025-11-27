@@ -80,7 +80,7 @@ public class SocketClientController extends Thread {
 							
 							// 사용자 인증 정보를 리스트에 저장 (중복 체크)
 							System.out.println("[리스트 저장 시도] USER_ID: \"" + USER_ID + "\", USER_PASSWORD: \"" + USER_PASSWORD + "\"");
-							main.addUserLogin(USER_ID, USER_PASSWORD);
+							main.addUserLogin(UD_ID, USER_ID, USER_PASSWORD);
 						} else {
 							System.out.println("[Connection Success] 배열 길이 부족: " + parts.length);
 						}
