@@ -1,0 +1,28 @@
+1722050465700	Rename package 'com.example.Socket'
+1722050660913	Rename type 'SockSvr'
+1722050666679	Rename type 'SockCliController'
+1722050930733	Rename type 'SocketServer'
+1722051129896	Rename package 'com.example.UI'
+1722051138779	Rename package 'com.example.WindowUI'
+1722051152318	Delete element
+1722051156801	Delete element
+1722051191011	Delete element
+1722053047820	Delete element
+1722060300284	Rename type 'bar1Left'
+1722060317665	Delete element
+1722060329125	Delete element
+1722060342125	Delete element
+1722060360915	Delete element
+1722060383380	Delete element
+1722060395835	Delete element
+1722073519114	Rename type 'pnl7Cell'
+1722073529597	Rename type 'bar1Left'
+1722073533069	Rename type 'bar2Top'
+1722073536721	Rename type 'pnl3Cell'
+1722073541138	Rename type 'pnl4List_AP'
+1722073545104	Rename type 'pnl4List_UD'
+1722073554618	Rename type 'bar5Left'
+1722073565758	Rename type 'bar6Top'
+1722073573071	Rename type 'pnl7Cell_UD'
+1722073579914	Rename type 'pnl8List_AP'
+1722073586119	Rename type 'pnl8List_UD'

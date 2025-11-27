@@ -1,0 +1,35 @@
+*.iml
+.gradle
+/local.properties
+/.idea/caches
+/.idea/libraries
+/.idea/modules.xml
+/.idea/workspace.xml
+/.idea/navEditor.xml
+/.idea/assetWizardSettings.xml
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+.cxx
+local.properties
+
+# IDE Files (Android Studio / IntelliJ)
+.idea/
+*.iws
+*.ipr
+
+# Gradle files (Windows)
+# gradlew와 gradlew.bat은 무시하지 않음
+!gradle/wrapper/gradle-wrapper.jar
+
+# Log and metadata files
+*.log
+*.bak
+*.swp
+.gitattributes
+
+Smart_Helmet_Ctrl_System_Windows/
+.metadata/
+bin/
+target/

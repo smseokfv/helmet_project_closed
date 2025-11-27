@@ -1,0 +1,28 @@
+# Java 컴파일 및 빌드 결과
+############################
+*.class
+*.jar
+*.war
+*.ear
+bin/
+target/
+
+# IDE 설정 파일 (Eclipse/IntelliJ)
+##################################
+.classpath
+.project
+.settings/
+*.iml
+.idea/
+
+# 운영체제 및 기타
+##################
+*.log
+Thumbs.db
+.DS_Store
+*~
+
+.metadata/
+target/
+*.class
+*.log
