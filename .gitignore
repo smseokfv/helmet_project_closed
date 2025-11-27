@@ -1,0 +1,51 @@
+# ------------------------------------------------------------------
+# 공통 (레포 전체)
+# ------------------------------------------------------------------
+*.iml
+*.iws
+*.ipr
+*.log
+*.bak
+*.swp
+.DS_Store
+*.class
+
+.gradle
+.metadata/
+bin/
+target/
+log/
+index/
+
+# 루트 기준 IDE/Tooling 파일
+/.idea/
+/.idea/caches
+/.idea/libraries
+/.idea/modules.xml
+/.idea/workspace.xml
+/.idea/navEditor.xml
+/.idea/assetWizardSettings.xml
+/local.properties
+/.gitattributes
+
+# Android 프로젝트 전용
+Smart_Helmet_Ctrl_System_Android/.gradle/
+Smart_Helmet_Ctrl_System_Android/local.properties
+Smart_Helmet_Ctrl_System_Android/.idea/
+Smart_Helmet_Ctrl_System_Android/app/build/
+Smart_Helmet_Ctrl_System_Android/build/
+Smart_Helmet_Ctrl_System_Android/captures/
+Smart_Helmet_Ctrl_System_Android/.externalNativeBuild/
+Smart_Helmet_Ctrl_System_Android/.cxx/
+
+# Gradle wrapper는 추적 유지
+!Smart_Helmet_Ctrl_System_Android/gradle/wrapper/gradle-wrapper.jar
+
+# Windows(Eclipse) 프로젝트 전용
+Smart_Helmet_Ctrl_System_Windows/.metadata/
+Smart_Helmet_Ctrl_System_Windows/bin/
+Smart_Helmet_Ctrl_System_Windows/target/
+Smart_Helmet_Ctrl_System_Windows/log/
+Smart_Helmet_Ctrl_System_Windows/index/
+
+
